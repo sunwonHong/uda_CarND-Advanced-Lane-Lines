@@ -393,6 +393,10 @@ if input_type == 'image':
 
 	final_lane_result = True
 	if final_lane_result == True:
+		text = 'Lane curvature: ' + '{:.0f}'.format((left_curverad+right_curverad)/2) + 'm'
+		cv2.putText(result, text, (50, 50), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 255, 255), 1, cv2.LINE_AA)
+		text = 'moved from middle(+ is to right, - is to left): ' + '{:.3f}'.format(abs(640-(leftx_sq[-1]+rightx_sq[-1])/2)*xpixel_to_m) + 'm'
+		cv2.putText(result, text, (50, 80), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 255, 255), 1, cv2.LINE_AA)
 		cv2.imshow('result',result)
 		cv2.imwrite("./output_images/final_lane_result.jpg", result)
 		cv2.waitKey(0)
@@ -524,6 +528,11 @@ elif input_type == 'video':
 		lane_to_img = color_result
 
 		result = cv2.addWeighted(road_dst, 1, lane_to_img, 0.3, 0)
+
+		text = 'Lane curvature: ' + '{:.0f}'.format((left_curverad+right_curverad)/2) + 'm'
+		cv2.putText(result, text, (50, 50), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 255, 255), 1, cv2.LINE_AA)
+		text = 'moved from middle(+ is to right, - is to left): ' + '{:.3f}'.format(abs(640-(leftx_sq[-1]+rightx_sq[-1])/2)*xpixel_to_m) + 'm'
+		cv2.putText(result, text, (50, 80), cv2.FONT_HERSHEY_DUPLEX, 1, (255, 255, 255), 1, cv2.LINE_AA)
 
 		cv2.imshow("video", result)
 		cv2.waitKey(1)
