@@ -13,7 +13,7 @@ The Project
 [image5]: ./output_images/road_poly.jpg "Fit Visual"
 [image6]: ./output_images/road_lane.jpg "Fit Visual"
 [image7]: ./output_images/final_lane_result.jpg "Output"
-[video1]: .output.mp4 "Video"
+[video1]: ./output.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
