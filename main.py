@@ -227,7 +227,7 @@ input_type = 'video'
 
 #image
 if input_type == 'image':
-	road_img = cv2.imread("./test_images/test2.jpg")
+	road_img = cv2.imread("./test_images/test1.jpg")
 	road_dst = cv2.undistort(road_img, mtx, dist, None, mtx)
 
 	road_undistort = True
@@ -237,8 +237,11 @@ if input_type == 'image':
 		cv2.waitKey(0)
 
 	#sobel
-	sobel_x = find_sobel(road_dst, 'x', 3, 35, 100)
-	sobel_y = find_sobel(road_dst, 'y', 3, 30, 255)
+	# sobel_x = find_sobel(road_dst, 'x', 3, 35, 100)
+	# sobel_y = find_sobel(road_dst, 'y', 3, 30, 255)
+	sobel_x = find_sobel(road_dst, 'x', 3, 35, 255)
+	sobel_y = find_sobel(road_dst, 'y', 3, 15, 255)
+
 	mag_binary = find_mag(road_dst, 3, (30, 255))
 	dir_binary = find_dir(road_dst, 15, (0.7, 1.3))
 
@@ -248,6 +251,10 @@ if input_type == 'image':
 	road_binary = True
 	if road_binary == True:
 		cv2.imshow("combined", combined)
+		cv2.imshow("sobel_x", sobel_x*255)
+		cv2.imshow("sobel_y", sobel_y*255)
+		cv2.imshow("mag_binary", mag_binary*255)
+		cv2.imshow("dir_binary", dir_binary)
 		cv2.imwrite("./output_images/road_binary.jpg", combined)
 		cv2.waitKey(0)
 
@@ -279,7 +286,7 @@ if input_type == 'image':
 
 	##grad + hsl
 	final_binary = np.zeros_like(combined_thr_img).astype(np.uint8)
-	final_binary[((combined >= 1) & (combined_thr_img >=1))] = 255
+	final_binary[((combined >= 1) | (combined_thr_img >=1))] = 255
 
 	road_final_binary = True
 	if road_final_binary == True:
@@ -404,8 +411,10 @@ elif input_type == 'video':
 		road_dst = cv2.undistort(road_img, mtx, dist, None, mtx)
 
 		#sobel
-		sobel_x = find_sobel(road_dst, 'x', 3, 35, 100)
-		sobel_y = find_sobel(road_dst, 'y', 3, 30, 255)
+		# sobel_x = find_sobel(road_dst, 'x', 3, 35, 100)
+		# sobel_y = find_sobel(road_dst, 'y', 3, 30, 255)
+		sobel_x = find_sobel(road_dst, 'x', 3, 35, 255)
+		sobel_y = find_sobel(road_dst, 'y', 3, 15, 255)
 		mag_binary = find_mag(road_dst, 3, (30, 255))
 		dir_binary = find_dir(road_dst, 15, (0.7, 1.3))
 
@@ -433,7 +442,7 @@ elif input_type == 'video':
 
 		##grad + hsl
 		final_binary = np.zeros_like(combined_thr_img).astype(np.uint8)
-		final_binary[((combined >= 1) & (combined_thr_img >=1))] = 255
+		final_binary[((combined >= 1) | (combined_thr_img >=1))] = 255
 
 		##warp
 		input_coord = np.float32([[257, 719], [604,456], [719, 451], [1135, 717]])
