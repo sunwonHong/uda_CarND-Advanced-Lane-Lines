@@ -395,7 +395,7 @@ elif input_type == 'video':
 	cap = cv2.VideoCapture(videoFile)
 
 	fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-	out = cv2.VideoWriter('output.avi', fourcc, 30.0, (1280, 720))
+	out = cv2.VideoWriter('output.mp4', fourcc, 30.0, (1280, 720))
 
 	while(cap.isOpened()):
 		ret, frame = cap.read()
